@@ -34,20 +34,28 @@ public class Client {
 	}
 	private static boolean validateIPAddress(String input){
 		String[] parts = input.split(".");
+		boolean valide = true;
 		if (parts.length != 4){ //
-			return false;
+			valide= false;
 		}
 		for( String part : parts){
+			if (valide = false){
+				break
+			}
 			if (!isNumeral(part)){
-				return false;
+				valide =  false;
 			}
 			int value = Integer.parseInt(part);
 			if (value < 0 || value > 255) {
-				return false;
+				valide = false;
 			}
 		}
 
-		return true;
+		if (!valide){
+			System.out.printIn("Format d'addresse IP invalide");
+		}
+
+		return valide;
 	}
 
 	private static boolean validatePort(String string){
