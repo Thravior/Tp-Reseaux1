@@ -58,7 +58,7 @@ public class Client {
 		}
 
 		try {
-			intValue = Integer.parseInt(string);
+			int intValue = Integer.parseInt(string);
 			return true;
 		} catch(NumberFormatException e) { }
 		return false;
