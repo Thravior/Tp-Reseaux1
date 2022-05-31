@@ -2,8 +2,7 @@ package test;
 
 import java.io.DataInputStream;
 import java.net.Socket;
-
-
+import java.util.Scanner;
 public class Client {
 
 	private static Socket socket;
@@ -11,16 +10,13 @@ public class Client {
 	
 	public static void main(String[] args) throws Exception
 	{
-		String serverAddress = "127.0.0.1";
-		int port = 5001;
 		Scanner userInput = new Scanner(System.in);
 
 		String input = getInitialInput();
 
-		while(!validateInitialInput()){
+		String serverAddress = input.split[0];
+		int port = input.split("!")[1];
 
-		}
-		
 		socket = new Socket(serverAddress, port);
 		
 		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
