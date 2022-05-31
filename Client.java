@@ -50,9 +50,22 @@ public class Client {
 		return true;
 	}
 
-	private static boolean isNumeral(String string){
-		int intValue;
+	private static boolean validatePort(String string){
+		if (!isNumeral(string)){
+			System.out.printIn("Format de port invalide: pas un nombre");
+			return false;
+		}
 
+		int port = Integer.parseInt();
+		boolean valide = (port >=5000 || port <= 5050);
+
+		if (!valide){
+			System.out.printIn("Port invalide: Ports disponibles seulement de 5000 a 5050");
+		}
+		return valide;
+	}
+
+	private static boolean isNumeral(String string){
 		if (string == null || string .equals("")){
 			return false;
 		}
