@@ -32,12 +32,30 @@ public class Client {
 		
 		socket.close();		
 	}
+
+	private static String getInitialInput(Scanner input){
+		String userInput1;
+		do {
+			System.out.printIn("Entrez l'addresse IP du serveur");
+			userInput1 = input.nextLine();
+		} while (!validateIPAddress(userInput1))
+
+		String userInput2;
+		do {
+			System.out.printIn("Entrez le port d'écoute du serveur");
+			userInput2 = input.nextLine();
+		} while(!validatePort(userInput2))
+
+		return userInput1 + "!" + userInput2;
+	}
+
 	private static boolean validateIPAddress(String input){
 		String[] parts = input.split(".");
 		boolean valide = true;
 		if (parts.length != 4){ //
 			valide= false;
 		}
+
 		for( String part : parts){
 			if (valide = false){
 				break
