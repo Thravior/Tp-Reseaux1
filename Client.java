@@ -13,6 +13,13 @@ public class Client {
 	{
 		String serverAddress = "127.0.0.1";
 		int port = 5001;
+		Scanner userInput = new Scanner(System.in);
+
+		String input = getInitialInput();
+
+		while(!validateInitialInput()){
+
+		}
 		
 		socket = new Socket(serverAddress, port);
 		
@@ -25,4 +32,18 @@ public class Client {
 		
 		socket.close();		
 	}
+	private static boolean isNumeral(String string){
+		int intValue;
+
+		if (string == null || string .equals("")){
+			return false;
+		}
+
+		try {
+			intValue = Integer.parseInt(string);
+			return true;
+		} catch(NumberFormatException e) { }
+		return false;
+	}
 }
+
