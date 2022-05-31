@@ -32,6 +32,24 @@ public class Client {
 		
 		socket.close();		
 	}
+	private static boolean validateIPAddress(String input){
+		String[] parts = input.split(".");
+		if (parts.length != 4){ //
+			return false;
+		}
+		for( String part : parts){
+			if (!isNumeral(part)){
+				return false;
+			}
+			int value = Integer.parseInt(part);
+			if (value < 0 || value > 255) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
 	private static boolean isNumeral(String string){
 		int intValue;
 
