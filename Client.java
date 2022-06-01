@@ -98,5 +98,23 @@ public class Client {
 		} catch(NumberFormatException e) { }
 		return false;
 	}
+
+	static boolean validateCommand(String string){
+		for (String command : commandsRegex){
+			if (string.matches(command)){
+				return true;
+			}
+		}
+		return false;
+	}
+
+	String[] commandsRegex = {
+			"^cd$",
+			"^ls$",
+			"^exit$",
+			"^upload\s.+",
+			"^download\s.+"
+	}
+
 }
 
