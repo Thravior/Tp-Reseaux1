@@ -2,7 +2,9 @@ package test;
 
 import java.io.DataInputStream;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.Scanner;	//
+import java.util.regex;		//
+
 public class Client {
 
 	private static Socket socket;
@@ -109,9 +111,10 @@ public class Client {
 	}
 
 	String[] commandsRegex = {
-			"^cd$",
 			"^ls$",
 			"^exit$",
+			"^cd\s.+",
+			"^mkdir\s.+",
 			"^upload\s.+",
 			"^download\s.+"
 	}
