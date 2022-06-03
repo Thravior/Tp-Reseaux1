@@ -38,7 +38,6 @@ public class UserInputGetter {
 
             if (parts.length == 4){
                 for( String part : parts){
-                    System.out.println(part);
                     if (!( valide = isNumeral(part)) ) {
                         break;
                     }
