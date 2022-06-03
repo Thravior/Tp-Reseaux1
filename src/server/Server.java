@@ -2,9 +2,7 @@ package server;
 
 import Client.UserInputGetter;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
@@ -66,6 +64,8 @@ public class Server {
         private Socket socket;
         private int clientNumber;
         private Path currentDirectory;
+        private BufferedReader in;
+        private PrintStream out;
 
         public ClientHandler(Socket socket, int clientNumber, Path rootDirectory) {
             this.socket = socket;
