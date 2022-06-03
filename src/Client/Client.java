@@ -1,6 +1,8 @@
 package Client;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;	//
 
@@ -10,26 +12,25 @@ import java.util.HashMap;
 public class Client {
 
 	private static Socket socket;
-	private HashMap<String, BiConsumer<String, Socket>> interpreteur = new HashMap<>();
 
-	private void mkdir(String name, Socket socket){
-
-	}
-
-	private void download(String name, Socket socket){
+	private static void upload(String instruction){
 
 	}
 
-	private void upload(String name, Socket socket){
+	private static void request(String instruction) {
+		try {
+			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
 
-	}
-
-	private void cd(String name, Socket socket){
-
-	}
-
-	private void ls(String name, Socket socket){
-
+			out.writeUTF(instruction);
+		} catch (IOException e) {
+			System.out.println("Error envoi serveur: " + e);
+		} finally {
+			try {
+				socket.close();
+			} catch (IOException e) {
+				System.out.println("Couldn't close a socket, what's going on?");
+			}
+		}
 	}
 
 
@@ -37,16 +38,28 @@ public class Client {
 	{
 		Scanner userInput = new Scanner(System.in);
 
+
 		String input = UserInputGetter.getInitialInput(userInput);
 
-		String serverAddress = input.split("!")[0];
-		int port = Integer.parseInt(input.split("!")[1]);
+		{
+			String serverAddress = input.split("!")[0];
+			int port = Integer.parseInt(input.split("!")[1]);
 
-		socket = new Socket(serverAddress, port);
-		
-		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
+			socket = new Socket(serverAddress, port);
+			System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
+		}
 
-
+		do {
+			input = UserInputGetter.getWorkingInput(userInput);
+			if (input != "exit"){
+				if (input.split(" ")[0] == "upload") {
+					upload(input);
+				}
+				else {
+					request(input);
+				}
+			}
+		} while (input != "exit");
 
 		DataInputStream in = new DataInputStream(socket.getInputStream());
 		
