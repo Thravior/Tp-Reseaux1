@@ -1,28 +1,53 @@
-package test;
+package Client;
 
 import java.io.DataInputStream;
 import java.net.Socket;
 import java.util.Scanner;	//
-import java.util.regex;		//
+
+import java.util.function.*;
+import java.util.HashMap;
 
 public class Client {
 
 	private static Socket socket;
-	
-	
+	private HashMap<String, BiConsumer<String, Socket>> interpreteur = new HashMap<>();
+
+	private void mkdir(String name, Socket socket){
+
+	}
+
+	private void download(String name, Socket socket){
+
+	}
+
+	private void upload(String name, Socket socket){
+
+	}
+
+	private void cd(String name, Socket socket){
+
+	}
+
+	private void ls(String name, Socket socket){
+
+	}
+
+
 	public static void main(String[] args) throws Exception
 	{
 		Scanner userInput = new Scanner(System.in);
 
-		String input = getInitialInput();
+		String input = getInitialInput(userInput);
 
 		String serverAddress = input.split[0];
-		int port = input.split("!")[1];
+		int port = Integer.parseInt(input.split("!")[1]);
 
 		socket = new Socket(serverAddress, port);
 		
 		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
-		
+
+
+
 		DataInputStream in = new DataInputStream(socket.getInputStream());
 		
 		String helloMsgDeServeur = in.readUTF();
@@ -34,29 +59,26 @@ public class Client {
 	private static String getInitialInput(Scanner input){
 		String userInput1;
 		do {
-			System.out.printIn("Entrez l'addresse IP du serveur");
+			System.out.print("Entrez l'addresse IP du serveur");
 			userInput1 = input.nextLine();
-		} while (!validateIPAddress(userInput1))
+		} while (!validateIPAddress(userInput1));
 
 		String userInput2;
 		do {
-			System.out.printIn("Entrez le port d'écoute du serveur");
+			System.out.print("Entrez le port d'écoute du serveur");
 			userInput2 = input.nextLine();
-		} while(!validatePort(userInput2))
+		} while(!validatePort(userInput2));
 
 		return userInput1 + "!" + userInput2;
 	}
 
 	private static boolean validateIPAddress(String input){
 		String[] parts = input.split(".");
-		boolean valide = true;
-		if (parts.length != 4){ //
-			valide= false;
-		}
+		boolean valide = parts.length == 4;
 
 		for( String part : parts){
 			if (valide = false){
-				break
+				break;
 			}
 			if (!isNumeral(part)){
 				valide =  false;
@@ -68,7 +90,7 @@ public class Client {
 		}
 
 		if (!valide){
-			System.out.printIn("Format d'addresse IP invalide");
+			System.out.print("Format d'addresse IP invalide");
 		}
 
 		return valide;
@@ -76,15 +98,15 @@ public class Client {
 
 	private static boolean validatePort(String string){
 		if (!isNumeral(string)){
-			System.out.printIn("Format de port invalide: pas un nombre");
+			System.out.print("Format de port invalide: pas un nombre");
 			return false;
 		}
 
-		int port = Integer.parseInt();
+		int port = Integer.parseInt(string);
 		boolean valide = (port >=5000 || port <= 5050);
 
 		if (!valide){
-			System.out.printIn("Port invalide: Ports disponibles seulement de 5000 a 5050");
+			System.out.print("Port invalide: Ports disponibles seulement de 5000 a 5050");
 		}
 		return valide;
 	}
@@ -110,14 +132,15 @@ public class Client {
 		return false;
 	}
 
-	String[] commandsRegex = {
+	static String[] commandsRegex = {
 			"^ls$",
 			"^exit$",
 			"^cd\s.+",
 			"^mkdir\s.+",
 			"^upload\s.+",
 			"^download\s.+"
-	}
+	};
+
 
 }
 
