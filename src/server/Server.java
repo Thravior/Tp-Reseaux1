@@ -128,7 +128,7 @@ public class Server {
                 catch(IOException e){
                     System.out.println("Couldn't close a socket, what's going on?");
                 }
-                System.out.println("Connection with client# " + clientNumber + "closed");
+                System.out.println("Connection with client# " + clientNumber + " closed");
             }
         }
 
