@@ -3,7 +3,9 @@ package Client;
 import java.util.Scanner;
 
 public class UserInputGetter {
-        public static String getInitialInput(Scanner input){
+    private Scanner userInput = new Scanner(System.in);
+
+    public static String getInitialInput(Scanner input){
             String userInput1;
             do {
                 System.out.print("Entrez l'addresse IP du serveur");
@@ -18,6 +20,17 @@ public class UserInputGetter {
 
             return userInput1 + "!" + userInput2;
         }
+
+    public static String getWorkingInput(Scanner input){
+        String userInput;
+        do{
+            System.out.print("Entrez une commande");
+            userInput = input.nextLine();
+        } while (!validateCommand(userInput));
+
+        return userInput;
+    }
+
 
         private static boolean validateIPAddress(String input){
             String[] parts = input.split(".");
@@ -76,6 +89,7 @@ public class UserInputGetter {
                     return true;
                 }
             }
+            System.out.print("Commande invalide");
             return false;
         }
 
@@ -87,4 +101,6 @@ public class UserInputGetter {
                 "^upload\s.+",
                 "^download\s.+"
         };
+
+
 }
