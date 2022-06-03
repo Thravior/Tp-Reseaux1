@@ -15,7 +15,8 @@ import java.util.Scanner;
 public class Server {
     private static ServerSocket listener;
     private static Path serverRoot;
-
+    private static String serverAddress;
+    private static int serverPort;
 
     public static void main(String[] args) throws Exception{
         Scanner userInput = new Scanner(System.in);
@@ -34,17 +35,16 @@ public class Server {
 
         String input = UserInputGetter.getInitialInput(userInput);
 
-        {
-            String serverAddress = input.split("!")[0];
-            int serverPort = Integer.parseInt(input.split("!")[1]);
 
-            listener = new ServerSocket();
-            listener.setReuseAddress(true);
-            InetAddress serverIP = InetAddress.getByName(serverAddress);
-            // Association de l'adresse et. du port à la connexien
-            listener.bind(new InetSocketAddress(serverIP, serverPort));
-            System.out.format("The server is running on %s:%d%n", serverAddress, serverPort);
-        }
+        serverAddress = input.split("!")[0];
+        serverPort = Integer.parseInt(input.split("!")[1]);
+
+        listener = new ServerSocket();
+        listener.setReuseAddress(true);
+        InetAddress serverIP = InetAddress.getByName(serverAddress);
+        // Association de l'adresse et. du port à la connexien
+        listener.bind(new InetSocketAddress(serverIP, serverPort));
+        System.out.format("The server is running on %s:%d%n", serverAddress, serverPort);
 
 
         try {
