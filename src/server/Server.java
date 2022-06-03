@@ -19,12 +19,14 @@ public class Server {
     public static void main(String[] args) throws Exception{
         Scanner userInput = new Scanner(System.in);
 
-        Path rootDirectory = Paths.get("", "/root");
+        String userDir = System.getProperty("user.dir");
+        Path rootDirectory = Paths.get(userDir, "root");
+
         if (Files.notExists(rootDirectory)) {
             Files.createDirectory(rootDirectory);
         }
-        serverRoot = Paths.get("root");
-
+        serverRoot = rootDirectory;
+        System.out.println(serverRoot);
 
         // Compteur incrémenté à chaque connexien d'un client au serveur
         int clientNumber = 0;
