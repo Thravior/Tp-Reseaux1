@@ -139,9 +139,14 @@ public class Server {
         {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
-                DataInputStream in = new DataInputStream(socket.getInputStream());
-                String cmd = in.readUTF();
-                System.out.println(cmd);
+                String[] cmd;
+                do {
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
+                    cmd = in.readUTF().split(" ");
+
+                    System.out.println(cmd[0]);
+                } while(cmd[0] != "exit");
+
 
 
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
