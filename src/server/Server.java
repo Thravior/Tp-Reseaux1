@@ -14,22 +14,22 @@ public class Server
     public static void main(String[] args) throws Exception {
 
 
-        // Someteur incrémenté à shaque connexien d'un client au serveun
+        // Compteur incrémenté à chauque connexion d'un client au serveur
         int clientNumber = 0;
-        // Adresse et port du serveun
+        // Adresse et port du serveur
         String serverAddress = "127.0.0.1";
         int serverPort = 5000;
-// créatian de la sonnexian pour communiquer aves les clients
+// création de la connexion pour 
         listener = new ServerSocket();
         listener.setReuseAddress(true);
         InetAddress serverIP = InetAddress.getByName(serverAddress);
-// Association de l'adresse et. du port à la connexien
+// Association de l'adresse et. du port à la connexion
         listener.bind(new InetSocketAddress(serverIP, serverPort));
         System.out.format("The server is running on %:%d%n", serverAddress, serverPort);
         try {
             while (true) {
-// Important : la fonstion accept() est blaquante : attend qu'un proshain client se connecte
-// Une nouvetle connection : on incémente le compteur clientNumber
+// Important : la fonction accept() est blaquante : attend qu'un prochain client se connecte
+// Une nouvelle connexion : on incrémente le compteur clientNumber
     new ClientHandler(listener.accept(), clientNumber++).start();
 }
 } finally {
@@ -61,7 +61,7 @@ public class Server
                 System.out.println("Error handling client#" + clientNumber + ": " + e);
             } finally {
                 try {
-// fermetuce de la sonnexien aves le client
+// fermeture de la connexion avec le client
                     socket.close();
                 }
                 catch(IOException e){
