@@ -152,15 +152,26 @@ public class Server {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
                 String[] cmd;
-                do {
-                    DataInputStream in = new DataInputStream(socket.getInputStream());
-                    String command = in.readUTF();
-                    cmd = command.split(" ");
-                    System.out.println(cmd[0]);
+                BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream() ));
+                String inputL;
+
+                while( (inputL = in.readLine()) != null) {
+                    System.out.println("oui");
+
+                    cmd = inputL.split(" ");
+
+                    if (cmd[0] == "cd"){
+                        cd(cmd[1]);
+                    }
+
+                    System.out.println( cmd[0] );
 
                     log(cmd);
 
-                } while(cmd[0] != "exit");
+                    if (cmd[0] == "exit" ){
+                        break;
+                    }
+                }
 
 
 
