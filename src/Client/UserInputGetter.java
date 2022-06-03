@@ -50,7 +50,7 @@ public class UserInputGetter {
             }
 
             if (!valide){
-                System.out.print("Format d'addresse IP invalide");
+                System.out.print("Format d'addresse IP invalide\n");
             }
 
             return valide;
