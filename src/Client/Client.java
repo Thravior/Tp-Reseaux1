@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Scanner;	//
 
-import java.util.function.*;
-import java.util.HashMap;
 
 public class Client {
 
@@ -20,7 +18,7 @@ public class Client {
 	private static void request(String instruction) {
 		try {
 			DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-
+			System.out.println(instruction);
 			out.writeUTF(instruction);
 		} catch (IOException e) {
 			System.out.println("Error envoi serveur: " + e);
@@ -51,13 +49,11 @@ public class Client {
 
 		do {
 			input = UserInputGetter.getWorkingInput(userInput);
-			if (input != "exit"){
-				if (input.split(" ")[0] == "upload") {
-					upload(input);
-				}
-				else {
-					request(input);
-				}
+			if (!(input.split(" ")[0] == "upload") ) {
+				request(input);
+			}
+			else {
+				upload(input);
 			}
 		} while (input != "exit");
 

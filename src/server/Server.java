@@ -2,6 +2,7 @@ package server;
 
 import Client.UserInputGetter;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -138,6 +139,11 @@ public class Server {
         {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+                String cmd = in.readUTF();
+                System.out.println(cmd);
+
+
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 // Envoie d'un message au client
                 out.writeUTF("Hello from server you are client#" + clientNumber);
