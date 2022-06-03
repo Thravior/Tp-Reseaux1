@@ -33,19 +33,19 @@ public class UserInputGetter {
 
 
         private static boolean validateIPAddress(String input){
-            String[] parts = input.split(".");
-            boolean valide = parts.length == 4;
+            String[] parts = input.split("\\.");
+            boolean valide = false;
 
-            for( String part : parts){
-                if (valide = false){
-                    break;
-                }
-                if (!isNumeral(part)){
-                    valide =  false;
-                }
-                int value = Integer.parseInt(part);
-                if (value < 0 || value > 255) {
-                    valide = false;
+            if (parts.length == 4){
+                for( String part : parts){
+                    System.out.println(part);
+                    if (!( valide = isNumeral(part)) ) {
+                        break;
+                    }
+                    int value = Integer.parseInt(part);
+                    if (value < 0 || value > 255) {
+                        valide = false;
+                    }
                 }
             }
 
