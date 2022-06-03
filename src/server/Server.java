@@ -137,6 +137,15 @@ public class Server {
         }
 
 
+        private void log(String[] command){
+            DateTimeFormatter dtfDay = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+            LocalDate localDate = LocalDate.now();
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+            LocalTime localTime = LocalTime.now();
+            String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
+            String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + command ;
+            System.out.println(info);
+        }
 
         public void run()
         {
@@ -149,13 +158,8 @@ public class Server {
                     cmd = command.split(" ");
                     System.out.println(cmd[0]);
 
-                    DateTimeFormatter dtfDay = DateTimeFormatter.ofPattern("uuuu-MM-dd");
-                    LocalDate localDate = LocalDate.now();
-                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
-                    LocalTime localTime = LocalTime.now();
-                    String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
-                    String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + command ;
-                    System.out.println(info);
+                    log(cmd);
+
                 } while(cmd[0] != "exit");
 
 
