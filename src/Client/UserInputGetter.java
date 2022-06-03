@@ -57,16 +57,18 @@ public class UserInputGetter {
         }
 
         private static boolean validatePort(String string){
-            if (!isNumeral(string)){
-                System.out.print("Format de port invalide: pas un nombre");
+            boolean valide;
+
+            if (!(valide = isNumeral(string))){
+                System.out.print("Format de port invalide: pas un nombre \n");
                 return false;
             }
 
             int port = Integer.parseInt(string);
-            boolean valide = (port >=5000 || port <= 5050);
+            valide = (port >=5000 && port <= 5050);
 
             if (!valide){
-                System.out.print("Port invalide: Ports disponibles seulement de 5000 a 5050");
+                System.out.print("Port invalide: Ports disponibles seulement de 5000 a 5050\n");
             }
             return valide;
         }
