@@ -10,6 +10,10 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Server {
@@ -142,9 +146,17 @@ public class Server {
                 String[] cmd;
                 do {
                     DataInputStream in = new DataInputStream(socket.getInputStream());
-                    cmd = in.readUTF().split(" ");
-
+                    String command = in.readUTF();
+                    cmd = command.split(" ");
                     System.out.println(cmd[0]);
+
+                    DateTimeFormatter dtfDay = DateTimeFormatter.ofPattern("uuuu-MM-dd");
+                    LocalDate localDate = LocalDate.now();
+                    DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
+                    LocalTime localTime = LocalTime.now();
+                    String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
+                    String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + command ;
+                    System.out.println(info);
                 } while(cmd[0] != "exit");
 
 
