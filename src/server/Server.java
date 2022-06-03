@@ -19,8 +19,8 @@ import java.util.Scanner;
 public class Server {
     private static ServerSocket listener;
     private static Path serverRoot;
-    private static String serverAddress;
-    private static int serverPort;
+    private static String serverAddress = "127.0.0.1";
+    private static int serverPort = 5000;
 
     public static void main(String[] args) throws Exception{
         Scanner userInput = new Scanner(System.in);
@@ -37,11 +37,10 @@ public class Server {
         // Compteur incrémenté à chaque connexien d'un client au serveur
         int clientNumber = 0;
 
-        String input = UserInputGetter.getInitialInput(userInput);
-
-
-        serverAddress = input.split("!")[0];
-        serverPort = Integer.parseInt(input.split("!")[1]);
+//        String input = UserInputGetter.getInitialInput(userInput);
+//
+//        serverAddress = input.split("!")[0];
+//        serverPort = Integer.parseInt(input.split("!")[1]);
 
         listener = new ServerSocket();
         listener.setReuseAddress(true);
