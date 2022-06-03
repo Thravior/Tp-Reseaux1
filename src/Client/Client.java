@@ -39,7 +39,7 @@ public class Client {
 
 		String input = getInitialInput(userInput);
 
-		String serverAddress = input.split[0];
+		String serverAddress = input.split("!")[0];
 		int port = Integer.parseInt(input.split("!")[1]);
 
 		socket = new Socket(serverAddress, port);
