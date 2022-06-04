@@ -92,6 +92,19 @@ public class Server {
                 sendAnswer(answer);
             }
         }
+        private void upload(String fileName) throws IOException {
+            DataInputStream dis = new DataInputStream(socket.getInputStream());
+            FileOutputStream fos = new FileOutputStream(fileName);
+            byte[] buffer = new byte[4096];
+            long fileSize = dis.readLong();
+            int read = 0;
+            while(fileSize > 0 && (read = dis.read(buffer)) > 0) {
+                fos.write(buffer, 0, read);
+                fileSize -= read;
+            }
+            fos.close();
+            out.println("Le fichier " + fileName + " a bien ete televerse");
+        }
 
         private void ls(){
             String answer = "";
@@ -153,7 +166,8 @@ public class Server {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime localTime = LocalTime.now();
             String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
-            String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + command ;
+            // TODO demander a Matias c'est quoi le probleme avec le cd car on a un caractere non reconnue
+            String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + String.join(",", command) ;
             System.out.println(info);
         }
 
@@ -162,25 +176,47 @@ public class Server {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
                 String[] cmd;
-                BufferedReader in = new BufferedReader( new InputStreamReader(socket.getInputStream() ));
-                String inputL;
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+//                in.readUTF();
 
-                while( (inputL = in.readLine()) != null) {
-                    System.out.println("oui");
+                String inputL;
+                System.out.println("avant while");
+                while( (inputL = in.readUTF()) != null) {
+                    System.out.println("Dans while");
 
                     cmd = inputL.split(" ");
-
-                    if (cmd[0] == "cd"){
+                    log(cmd);
+                    System.out.println(cmd[0]);
+                    if (cmd[0].equals("cd")){
+                        System.out.println("Dans cd");
                         cd(cmd[1]);
                     }
 
-                    System.out.println( cmd[0] );
-
-                    log(cmd);
-
-                    if (cmd[0] == "exit" ){
+                    if (cmd[0].equals("exit") ){
                         break;
                     }
+                    if (cmd[0].equals("upload") ){
+                        System.out.println("Dans upload");
+                        upload(cmd[1]);
+                    }
+
+
+//                    switch (cmd[0]){
+//                        case "cd":
+//                            cd(cmd[1]);
+//                            break;
+//
+//                        case "exit":
+//                           break;
+//
+//                        case "upload":
+//                            System.out.println("Dans upload");
+//                            upload(cmd[1]);
+//                            break;
+//
+//                    }
+
+
                 }
 
 
