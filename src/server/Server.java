@@ -95,7 +95,8 @@ public class Server {
 
         private void cd(String name) {
             String answer = "";
-            if (name == "..") {
+            System.out.println(currentDirectory);
+            if ("..".equals(name)) {
                 if(!currentDirectory.endsWith("root")){
                     currentDirectory = currentDirectory.getParent();
                     answer = answer + "it worked";
