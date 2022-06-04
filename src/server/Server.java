@@ -93,6 +93,7 @@ public class Server {
             }
         }
         private void upload(String fileName) throws IOException {
+            System.out.println("in upload");
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             FileOutputStream fos = new FileOutputStream(fileName);
             byte[] buffer = new byte[4096];

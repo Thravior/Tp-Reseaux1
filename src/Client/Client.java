@@ -10,6 +10,8 @@ public class Client {
 	private static Socket socket;
 
 	private static void upload(File file) throws IOException {
+//		TODO revoir car valeur statique
+//		file = new File("./go.txt");
 		DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 		FileInputStream fis = new FileInputStream(file.toString());
 		byte[] buffer = new byte[4096];
@@ -54,13 +56,14 @@ public class Client {
 
 		do {
 			input = UserInputGetter.getWorkingInput(userInput);
-			if (!(input.split(" ")[0] == "upload") ) {
+			if (!(input.split(" ")[0].equals("upload")) ) {
 				request(input);
 			}
 			else {
+				System.out.println("in upload");
 				upload(new File(input));
 			}
-		} while (input != "exit");
+		} while (!input.equals("exit"));
 
 		DataInputStream in = new DataInputStream(socket.getInputStream());
 		
