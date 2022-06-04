@@ -93,6 +93,23 @@ public class Server {
             }
         }
 
+        private void ls(){
+            String answer = "";
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(currentDirectory)) {
+                for (Path entry: stream) {
+                    if (Files.isDirectory(entry)){
+                        answer = answer + "[" + entry.getFileName() + "]\n";
+                    }
+                    else {
+                        answer = answer + entry.getFileName() + "\n";
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            sendAnswer(answer);
+        }
+
         private void cd(String name) {
             String answer = "";
             System.out.println(currentDirectory);
