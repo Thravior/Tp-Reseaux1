@@ -80,11 +80,11 @@ public class Server {
         private void mkdir(String name) {
             String answer = "";
             try {
-                name = "/" + name;
-                Path creationPath = Paths.get(currentDirectory.toString(), name);
+                Path creationPath = currentDirectory.resolve(name);
                 Files.createDirectory(creationPath);
+                answer = answer + "Fichier " + name + " créé avec succès \n";
             } catch (FileAlreadyExistsException e) {
-                answer = answer + "Error: directory already exists";
+                answer = answer + "Error: directory already exists\n";
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -125,15 +125,7 @@ public class Server {
                 out.writeUTF(answer);
             } catch (IOException e) {
                 System.out.println("Error handling client#" + clientNumber + " : " + e);
-            } finally {
-                try {
-                    socket.close();
-                }
-                catch(IOException e){
-                    System.out.println("Couldn't close a socket, what's going on?");
-                }
-                System.out.println("Connection with client# " + clientNumber + " closed");
-            }
+            } finally { }
         }
 
 
