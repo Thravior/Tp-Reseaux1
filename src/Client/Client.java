@@ -54,7 +54,7 @@ public class Client {
 				request(input);
 			}
 			else {
-				System.out.println("in upload");
+
 				upload(new File(input));
 			}
 		} while (!input.equals("exit"));

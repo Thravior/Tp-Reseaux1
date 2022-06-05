@@ -93,7 +93,7 @@ public class Server {
             }
         }
         private void upload(String fileName) throws IOException {
-            System.out.println("in upload");
+
             DataInputStream dis = new DataInputStream(socket.getInputStream());
             FileOutputStream fos = new FileOutputStream(fileName);
             byte[] buffer = new byte[4096];
@@ -183,15 +183,15 @@ public class Server {
 //                in.readUTF();
 
                 String inputL;
-                System.out.println("avant while");
+
                 while( (inputL = in.readUTF()) != null) {
-                    System.out.println("Dans while");
+
 
                     cmd = inputL.split(" ");
                     log(cmd);
                     System.out.println(cmd[0]);
                     if (cmd[0].equals("cd")){
-                        System.out.println("Dans cd");
+
                         cd(cmd[1]);
                     }
 
@@ -199,7 +199,7 @@ public class Server {
                         break;
                     }
                     if (cmd[0].equals("upload") ){
-                        System.out.println("Dans upload");
+
                         upload(cmd[1]);
                     }
                 }
