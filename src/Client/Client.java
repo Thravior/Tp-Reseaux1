@@ -124,7 +124,6 @@ public class Client {
 
 	public static void main(String[] args) throws Exception
 	{
-		DataInputStream in = new DataInputStream(socket.getInputStream());
 		Scanner userInput = new Scanner(System.in);
 
 		String input = UserInputGetter.getInitialInput(userInput);
@@ -150,6 +149,7 @@ public class Client {
 			else {
 				request(input);
 			}
+
 			String serverAnswer = in.readUTF();
 			System.out.print(serverAnswer);
 		} while (!input.equals("exit"));
