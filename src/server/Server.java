@@ -201,10 +201,10 @@ public class Server {
             if ("..".equals(name)) {
                 if(!currentDirectory.equals(serverRoot)){
                     currentDirectory = currentDirectory.getParent();
-                    answer = answer + "it worked";
+                    answer = "Currently on /";
                 }
                 else {
-                    answer = answer + "Error: already at root directory.";
+                    answer = "Error: already at root directory.";
                 }
             }
             else {
