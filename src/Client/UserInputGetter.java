@@ -3,8 +3,6 @@ package Client;
 import java.util.Scanner;
 
 public class UserInputGetter {
-    private Scanner userInput = new Scanner(System.in);
-
     public static String getInitialInput(Scanner input){
             String userInput1;
             do {
