@@ -135,6 +135,53 @@ public class Server {
             sendAnswer(answer);
         }
 
+        private void download(String name) {
+            String answer = "";
+            Path fileSource = currentDirectory.resolve(name);
+
+            if (Files.exists(fileSource)) {
+                FileInputStream fis = null;
+                BufferedInputStream bis = null;
+                OutputStream os = null;
+
+                try {
+                    DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+
+                    long fileSize = Files.size(fileSource);
+
+                    dos.writeUTF(Long.toString(fileSize + 1000));
+
+                    try {
+                        File myFile = new File (fileSource.toString());
+                        byte [] mybytearray  = new byte [(int)myFile.length()];
+                        fis = new FileInputStream(myFile);
+                        bis = new BufferedInputStream(fis);
+
+                        bis.read(mybytearray,0,mybytearray.length);
+                        os = socket.getOutputStream();
+
+                        System.out.println("Sending " + fileSource + "(" + mybytearray.length + " bytes)");
+                        os.write(mybytearray,0,mybytearray.length);
+
+                        os.flush();
+
+                    }            finally {
+                        if (bis != null) bis.close();
+                        if (os != null) os.close();
+                    }
+                    answer = name + " sent.\n";
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    answer = "Could not send file";
+                }
+            }
+            else {
+                answer = "No such file in the current directory.\n";
+            }
+            sendAnswer(answer);
+        }
+
         private void ls(){
             String answer = "";
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(currentDirectory)) {
