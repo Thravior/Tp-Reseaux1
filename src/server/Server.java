@@ -252,31 +252,34 @@ public class Server {
         {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
-                String[] cmd;
-//                DataInputStream in = new DataInputStream(socket.getInputStream());
+                String[] sections;
                 DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
-//                in.readUTF();
 
-                String inputL;
-                System.out.println("avant while");
-                while( (inputL = in.readUTF()) != null) {
-                    System.out.println("Dans while");
+                String clientInput;
 
-                    cmd = inputL.split(" ");
-                    log(cmd);
-                    System.out.println(cmd[0]);
-                    if (cmd[0].equals("cd")){
-                        System.out.println("Dans cd");
-                        cd(cmd[1]);
+
+                while( (clientInput = in.readUTF()) != null) {
+                    sections = clientInput.split(" ");
+                    log(sections);
+                    if (sections[0].equals("cd")){
+                        cd(sections[1]);
                     }
-
-                    if (cmd[0].equals("exit") ){
+                    else if (sections[0].equals("upload") ){
+                        upload(sections[1], Long.decode(sections[2]));
+                    }
+                    else if (sections[0].equals("ls")) {
+                        ls();
+                    }
+                    else if (sections[0].equals("download")){
+                        download(sections[1]);
+                    }
+                    else if (sections[0].equals("mkdir")){
+                        mkdir(sections[1]);
+                    }
+                    else if (sections[0].equals("exit") ){
                         break;
                     }
-                    if (cmd[0].equals("upload") ){
-                        System.out.println("Dans upload");
-                        upload(cmd[1]);
-                    }
+
                 }
 
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
