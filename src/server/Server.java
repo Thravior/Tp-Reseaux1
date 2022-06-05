@@ -199,7 +199,7 @@ public class Server {
             String answer = "";
             System.out.println(currentDirectory);
             if ("..".equals(name)) {
-                if(!currentDirectory.endsWith("root")){
+                if(!currentDirectory.equals(serverRoot)){
                     currentDirectory = currentDirectory.getParent();
                     answer = answer + "it worked";
                 }
