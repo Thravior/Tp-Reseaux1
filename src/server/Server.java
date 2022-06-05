@@ -197,7 +197,7 @@ public class Server {
             LocalTime localTime = LocalTime.now();
             String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
             // TODO demander a Matias c'est quoi le probleme avec le cd car on a un caractere non reconnue
-            String info = "[" + serverAddress + ":" + serverPort +"-" + now + "]:" + String.join(",", command) ;
+            String info = "[" + serverAddress + ":" + serverPort + "-" + now + "]:" + String.join(", ", command) ;
             System.out.println(info);
         }
 
