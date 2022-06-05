@@ -92,19 +92,46 @@ public class Server {
                 sendAnswer(answer);
             }
         }
-        private void upload(String fileName) throws IOException {
-            System.out.println("in upload");
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            FileOutputStream fos = new FileOutputStream(fileName);
-            byte[] buffer = new byte[4096];
-            long fileSize = dis.readLong();
-            int read = 0;
-            while(fileSize > 0 && (read = dis.read(buffer)) > 0) {
-                fos.write(buffer, 0, read);
-                fileSize -= read;
+
+        private void upload(String fileName, long fileSize) throws IOException {
+            String answer = "";
+
+            FileOutputStream fos = null;
+            BufferedOutputStream bos = null;
+
+            try {
+                int bytesRead;
+                int current = 0;
+
+                InputStream is = socket.getInputStream();
+
+                Path destination = currentDirectory.resolve(fileName);
+                System.out.println(destination);
+
+                byte [] mybytearray  = new byte [(int)fileSize];
+                fos = new FileOutputStream(destination.toString());
+                bos = new BufferedOutputStream(fos);
+                bytesRead = is.read(mybytearray,0,mybytearray.length);
+                current = bytesRead;
+
+                do {
+                    bytesRead =
+                            is.read(mybytearray, current, (mybytearray.length-current));
+                    if(bytesRead >= 0) current += bytesRead;
+                } while(bytesRead > -1);
+
+                bos.write(mybytearray, 0 , current);
+                bos.flush();
+
+                answer = fileName + " reçu avec succès.\n";
+            } catch (IOException e) {
+                answer = "Erreur dans la reception";
             }
-            fos.close();
-            out.println("Le fichier " + fileName + " a bien ete televerse");
+            finally {
+                if (fos != null) fos.close();
+                if (bos != null) bos.close();
+            }
+            sendAnswer(answer);
         }
 
         private void ls(){
