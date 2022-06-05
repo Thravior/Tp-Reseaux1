@@ -135,7 +135,9 @@ public class Client {
 		socket = new Socket(serverAddress, port);
 
 		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
-		
+
+		DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+
 		do {
 			input = UserInputGetter.getWorkingInput(userInput);
 			String command = input.split("0")[0];
