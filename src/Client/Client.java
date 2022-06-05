@@ -150,7 +150,7 @@ public class Client {
 			}
 			String serverAnswer = in.readUTF();
 			System.out.print(serverAnswer);
-		} while (input != "exit");
+		} while (!input.equals("exit"));
 
 		socket.close();	}
 }
