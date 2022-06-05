@@ -112,7 +112,7 @@ public class Server {
             try (DirectoryStream<Path> stream = Files.newDirectoryStream(currentDirectory)) {
                 for (Path entry: stream) {
                     if (Files.isDirectory(entry)){
-                        answer = answer + "[" + entry.getFileName() + "]\n";
+                        answer = "[" + entry.getFileName() + "]\n" + answer;
                     }
                     else {
                         answer = answer + entry.getFileName() + "\n";
