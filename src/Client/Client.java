@@ -1,8 +1,6 @@
 package Client;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;	//
 
@@ -11,8 +9,16 @@ public class Client {
 
 	private static Socket socket;
 
-	private static void upload(String instruction){
-
+	private static void upload(File file) throws IOException {
+		DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+		FileInputStream fis = new FileInputStream(file.toString());
+		byte[] buffer = new byte[4096];
+		int read;
+		dos.writeLong(file.length());
+		while ((read=fis.read(buffer)) > 0) {
+			dos.write(buffer, 0, read);
+		}
+		fis.close();
 	}
 
 	private static void request(String instruction) {
@@ -30,7 +36,6 @@ public class Client {
 			}
 		}
 	}
-
 
 	public static void main(String[] args) throws Exception
 	{
@@ -53,7 +58,7 @@ public class Client {
 				request(input);
 			}
 			else {
-				upload(input);
+				upload(new File(input));
 			}
 		} while (input != "exit");
 
