@@ -124,6 +124,7 @@ public class Client {
 
 	public static void main(String[] args) throws Exception
 	{
+		DataInputStream in = new DataInputStream(socket.getInputStream());
 		Scanner userInput = new Scanner(System.in);
 
 		String input = UserInputGetter.getInitialInput(userInput);
@@ -134,7 +135,7 @@ public class Client {
 		socket = new Socket(serverAddress, port);
 
 		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
-
+		
 		do {
 			input = UserInputGetter.getWorkingInput(userInput);
 			String command = input.split("0")[0];
@@ -147,6 +148,8 @@ public class Client {
 			else {
 				request(input);
 			}
+			String serverAnswer = in.readUTF();
+			System.out.print(serverAnswer);
 		} while (input != "exit");
 
 		socket.close();	}
