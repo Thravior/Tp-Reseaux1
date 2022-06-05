@@ -65,8 +65,6 @@ public class Server {
         private Socket socket;
         private int clientNumber;
         private Path currentDirectory;
-        private BufferedReader in;
-        private PrintStream out;
 
         public ClientHandler(Socket socket, int clientNumber, Path rootDirectory) {
             this.socket = socket;
@@ -218,9 +216,7 @@ public class Server {
                 } catch (InvalidPathException e) {
                     answer = answer + "Error: Could not resolve path";
                 }
-                finally {
-
-                }
+                finally { }
             }
             sendAnswer(answer);
         }
@@ -235,7 +231,6 @@ public class Server {
                 e.printStackTrace();
             } finally { }
         }
-
 
         private void log(String[] command){
             DateTimeFormatter dtfDay = DateTimeFormatter.ofPattern("uuuu-MM-dd");
@@ -256,7 +251,6 @@ public class Server {
                 DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
                 String clientInput;
-
 
                 while( (clientInput = in.readUTF()) != null) {
                     sections = clientInput.split(" ");
