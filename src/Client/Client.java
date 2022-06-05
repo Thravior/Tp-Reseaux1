@@ -30,12 +30,6 @@ public class Client {
 			out.writeUTF(instruction);
 		} catch (IOException e) {
 			System.out.println("Error envoi serveur: " + e);
-		} finally {
-			try {
-				socket.close();
-			} catch (IOException e) {
-				System.out.println("Couldn't close a socket, what's going on?");
-			}
 		}
 	}
 

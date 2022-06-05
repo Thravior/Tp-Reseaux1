@@ -157,6 +157,7 @@ public class Server {
                 out.writeUTF(answer);
             } catch (IOException e) {
                 System.out.println("Error handling client#" + clientNumber + " : " + e);
+                e.printStackTrace();
             } finally { }
         }
 
@@ -177,7 +178,8 @@ public class Server {
             try {
                 // création d'un canal sortant pour envoyer des messages au client
                 String[] cmd;
-                DataInputStream in = new DataInputStream(socket.getInputStream());
+//                DataInputStream in = new DataInputStream(socket.getInputStream());
+                DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 //                in.readUTF();
 
                 String inputL;
@@ -200,33 +202,14 @@ public class Server {
                         System.out.println("Dans upload");
                         upload(cmd[1]);
                     }
-
-
-//                    switch (cmd[0]){
-//                        case "cd":
-//                            cd(cmd[1]);
-//                            break;
-//
-//                        case "exit":
-//                           break;
-//
-//                        case "upload":
-//                            System.out.println("Dans upload");
-//                            upload(cmd[1]);
-//                            break;
-//
-//                    }
-
-
                 }
-
-
 
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 // Envoie d'un message au client
                 out.writeUTF("Hello from server you are client#" + clientNumber);
             } catch (IOException e) {
                 System.out.println("Error handling client#" + clientNumber + " : " + e);
+                e.printStackTrace();
             } finally {
                 try {
                 // fermetuce de la sonnexien aves le client
