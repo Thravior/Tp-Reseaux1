@@ -9,7 +9,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.file.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -162,7 +161,6 @@ public class Server {
                         os.write(mybytearray,0,mybytearray.length);
 
                         os.flush();
-
                     }            finally {
                         if (bis != null) bis.close();
                         if (os != null) os.close();
@@ -201,22 +199,23 @@ public class Server {
             String answer = "";
             System.out.println(currentDirectory);
             if ("..".equals(name)) {
-                if(!currentDirectory.endsWith("root")){
+                if(!currentDirectory.equals(serverRoot)){
                     currentDirectory = currentDirectory.getParent();
-                    answer = answer + "it worked";
+                    answer = "Currently on /";
                 }
                 else {
-                    answer = answer + "Error: already at root directory.";
+                    answer = "Error: already at root directory.";
                 }
             }
             else {
-                try {
-                    currentDirectory = currentDirectory.resolve(name);
-                    answer = answer + "Currently on directory: " + name;
-                } catch (InvalidPathException e) {
-                    answer = answer + "Error: Could not resolve path";
+                Path destination = currentDirectory.resolve(name);
+                if (Files.isDirectory(destination)) {
+                    currentDirectory = destination;
+                    answer = "Currently on directory: " + name;
                 }
-                finally { }
+                else {
+                    answer = "Error: no such directory";
+                }
             }
             sendAnswer(answer);
         }
@@ -238,7 +237,6 @@ public class Server {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime localTime = LocalTime.now();
             String now = dtfDay.format(localDate) +  " @ " + dtf.format(localTime) ;
-            // TODO demander a Matias c'est quoi le probleme avec le cd car on a un caractere non reconnue
             String info = "[" + serverAddress + ":" + serverPort + "-" + now + "]:" + String.join(", ", command) ;
             System.out.println(info);
         }
@@ -273,12 +271,11 @@ public class Server {
                     else if (sections[0].equals("exit") ){
                         break;
                     }
-
                 }
 
                 DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                 // Envoie d'un message au client
-                out.writeUTF("Hello from server you are client#" + clientNumber);
+                out.writeUTF("Closing connection with server. \n");
             } catch (IOException e) {
                 System.out.println("Error handling client#" + clientNumber + " : " + e);
                 e.printStackTrace();
