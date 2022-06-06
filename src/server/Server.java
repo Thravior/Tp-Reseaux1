@@ -80,7 +80,7 @@ public class Server {
             try {
                 Path creationPath = currentDirectory.resolve(name);
                 Files.createDirectory(creationPath);
-                answer = answer + "Fichier " + name + " créé avec succès \n";
+                answer = answer + "File " + name + " successfully created \n";
             } catch (FileAlreadyExistsException e) {
                 answer = answer + "Error: directory already exists\n";
             } catch (IOException e) {
@@ -121,9 +121,9 @@ public class Server {
                 bos.write(mybytearray, 0 , current);
                 bos.flush();
 
-                answer = fileName + " reçu avec succès.\n";
+                answer = fileName + " successfully received.\n";
             } catch (IOException e) {
-                answer = "Erreur dans la reception";
+                answer = "Error in reception";
             }
             finally {
                 if (fos != null) fos.close();
@@ -211,7 +211,7 @@ public class Server {
                 Path destination = currentDirectory.resolve(name);
                 if (Files.isDirectory(destination)) {
                     currentDirectory = destination;
-                    answer = "Currently on directory: " + name;
+                    answer = "Currently on directory: " + name +"\n";
                 }
                 else {
                     answer = "Error: no such directory";
@@ -281,7 +281,7 @@ public class Server {
                 e.printStackTrace();
             } finally {
                 try {
-                // fermetuce de la sonnexien aves le client
+                // fermeture de la connexion avec le client
                     socket.close();
                 }
                 catch(IOException e){

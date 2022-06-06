@@ -5,7 +5,7 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Scanner;	//
+import java.util.Scanner;
 
 
 public class Client {
@@ -62,7 +62,7 @@ public class Client {
 			System.out.println(instruction);
 			out.writeUTF(instruction);
 		} catch (IOException e) {
-			System.out.println("Error envoi serveur: " + e);
+			System.out.println("Error received from server: " + e);
 		}
 	}
 
@@ -73,7 +73,7 @@ public class Client {
 			out.writeUTF(instruction);
 
 		} catch (IOException e) {
-			System.out.println("Error envoi d'instruction au serveur: " + e);
+			System.out.println("Error while sending command to server: " + e);
 		}
 		try {
 			DataInputStream in = new DataInputStream(socket.getInputStream());
@@ -117,7 +117,7 @@ public class Client {
 			}
 
 		} catch (IOException e) {
-			System.out.println("Error Reception serveur: " + e);
+			System.out.println("Error received from server: " + e);
 		}
 
 	}
@@ -133,7 +133,7 @@ public class Client {
 
 		socket = new Socket(serverAddress, port);
 
-		System.out.format("Le serveur est sur %s:%d%n", serverAddress, port);
+		System.out.format("The server is running on %s:%d%n", serverAddress, port);
 
 		DataInputStream in = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
 
