@@ -8,13 +8,13 @@ public class UserInputGetter {
     public static String getInitialInput(Scanner input){
             String userInput1;
             do {
-                System.out.print("Entrez l'addresse IP du serveur");
+                System.out.print("Enter server IP address\n");
                 userInput1 = input.nextLine();
             } while (!validateIPAddress(userInput1));
 
             String userInput2;
             do {
-                System.out.print("Entrez le port d'écoute du serveur");
+                System.out.print("Enter serveur port\n");
                 userInput2 = input.nextLine();
             } while(!validatePort(userInput2));
 
@@ -38,7 +38,7 @@ public class UserInputGetter {
             }
 
             if (!valide){
-                System.out.print("Format d'addresse IP invalide\n");
+                System.out.print("Invalid IP Format\n");
             }
 
             return valide;
@@ -48,7 +48,7 @@ public class UserInputGetter {
             boolean valide;
 
             if (!(valide = isNumeral(string))){
-                System.out.print("Format de port invalide: pas un nombre \n");
+                System.out.print("Invalid port Format: not a number\n");
                 return false;
             }
 
@@ -56,7 +56,7 @@ public class UserInputGetter {
             valide = (port >=5000 && port <= 5050);
 
             if (!valide){
-                System.out.print("Port invalide: Ports disponibles seulement de 5000 a 5050\n");
+                System.out.print("Invalid port: only available between 5000 and 5050\n");
             }
             return valide;
         }
@@ -67,30 +67,9 @@ public class UserInputGetter {
             }
 
             try {
-                int intValue = Integer.parseInt(string);
+                Integer.parseInt(string);
                 return true;
             } catch(NumberFormatException e) { }
             return false;
         }
-
-        static boolean validateCommand(String string){
-            for (String command : commandsRegex){
-                if (string.matches(command)){
-                    return true;
-                }
-            }
-            System.out.print("Commande invalide");
-            return false;
-        }
-
-        static String[] commandsRegex = {
-                "^ls$",
-                "^exit$",
-                "^cd\s.+",
-                "^mkdir\s.+",
-                "^upload\s.+",
-                "^download\s.+"
-        };
-
-
 }
